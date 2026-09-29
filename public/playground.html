@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Playground 🧪 — 808 React ⚛️</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="logo">808 <span>React</span> ⚛️</div></div></div>
+<div class="wrap">
+  <h1>🧪 Playground</h1>
+  <p class="mut small">React code လွတ်လပ်စွာ စမ်းသပ်ပါ — <code>App</code> ဆိုတဲ့ component ရေးပါ, အောက်မှာ တကယ် run ပြမယ်။</p>
+  <textarea class="code-input" id="pgCode" spellcheck="false">function App() {
+  const [count, setCount] = React.useState(0);
+  return (
+    <div>
+      <h2>ရေတွက်စက် 🔢</h2>
+      <p>အကြိမ်: {count}</p>
+      <button onClick={() => setCount(count + 1)}>+ တိုး</button>
+    </div>
+  );
+}</textarea>
+  <div style="display:flex;gap:8px;margin:10px 0">
+    <button class="btn" id="runBtn" style="flex:1">▶ Run</button>
+    <button class="btn ghost" id="clearBtn">ရှင်း</button>
+  </div>
+  <iframe class="preview" id="pv" sandbox="allow-scripts"></iframe>
+  <div class="console-log" id="runConsole" style="margin-top:8px"><div class="mut">console output ဒီမှာပေါ်မယ်…</div></div>
+  <div class="card" style="margin-top:12px">
+    <h3>💡 စမ်းကြည့်ရန် ideas</h3>
+    <div id="ideas"></div>
+  </div>
+</div>
+<nav class="nav">
+  <a href="/"><span class="i">🏠</span>ပင်မ</a>
+  <a href="/playground.html" class="on"><span class="i">🧪</span>Playground</a>
+  <a href="/profile.html"><span class="i">👤</span>ကိုယ်ရေး</a>
+</nav>
+<script src="/runner.js"></script>
+<script>
+const ideas = [
+  ['နာမည်ပြကတ်', 'function App() {\n  return (\n    <div style={{border:"2px solid #61dafb",borderRadius:12,padding:16}}>\n      <h3>ကိုယ့်နာမည်</h3>\n      <p>အသက်: 20</p>\n    </div>\n  );\n}'],
+  ['အရောင်ပြောင်း ခလုတ်', 'function App() {\n  const [c, setC] = React.useState("white");\n  const colors = ["white","#fecaca","#bbf7d0","#bfdbfe"];\n  return (\n    <div style={{background:c,padding:20,borderRadius:12}}>\n      <button onClick={() => setC(colors[Math.floor(Math.random()*colors.length)])}>\n        အရောင်ပြောင်း 🎨\n      </button>\n    </div>\n  );\n}'],
+  ['စာရင်း', 'function App() {\n  const items = ["ထမင်း","ဟင်း","ရေ"];\n  return (\n    <ul>{items.map((x,i) => <li key={i}>{x}</li>)}</ul>\n  );\n}'],
+];
+const box = document.getElementById('ideas');
+box.innerHTML = ideas.map((x,i)=>`<button class="opt" data-i="${i}">${esc(x[0])}</button>`).join('');
+box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+  document.getElementById('pgCode').value = ideas[Number(b.dataset.i)][1];
+  document.getElementById('runBtn').click();
+  window.scrollTo(0,0);
+});
+onRunnerEvent(e=>{
+  const c = document.getElementById('runConsole');
+  const d = document.createElement('div');
+  d.className = e.type==='error'?'err':'';
+  d.textContent = (e.type==='error'?'⚠️ ':'› ')+e.message;
+  c.appendChild(d); c.scrollTop = c.scrollHeight;
+});
+document.getElementById('runBtn').onclick = ()=>{
+  const c = document.getElementById('runConsole');
+  c.innerHTML = '<div class="mut">running…</div>';
+  runJSX(document.getElementById('pgCode').value, document.getElementById('pv'));
+};
+document.getElementById('clearBtn').onclick = ()=>{
+  document.getElementById('pgCode').value = 'function App() {\n  return <h2>Hello React! ⚛️</h2>;\n}';
+};
+// note: in playground starter use React.useState since no import transform
+document.getElementById('runBtn').click();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" width="1200" height="120" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="w1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#61dafb" stop-opacity="0.0"/>
+      <stop offset="0.5" stop-color="#61dafb" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#818cf8" stop-opacity="0.0"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path d="M0,70 C100,40 200,100 300,70 C400,40 500,100 600,70 C700,40 800,100 900,70 C1000,40 1100,100 1200,70 C1300,40 1400,100 1500,70 L1500,120 L0,120 Z" fill="url(#w1)">
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="-300 0" dur="7s" repeatCount="indefinite"/>
+    </path>
+    <path d="M0,85 C120,60 220,110 340,85 C460,60 560,110 680,85 C800,60 900,110 1020,85 C1140,60 1240,110 1360,85 L1360,120 L0,120 Z" fill="#61dafb" opacity="0.12">
+      <animateTransform attributeName="transform" type="translate" from="-170 0" to="130 0" dur="10s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  <text x="600" y="62" text-anchor="middle" font-family="monospace" font-size="20" fill="#61dafb" opacity="0.8">⚛ built with love for Myanmar devs 🇲🇲 ⚛</text>
+</svg>

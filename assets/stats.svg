@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 240" width="900" height="240">
+  <defs>
+    <linearGradient id="sbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0f1e"/><stop offset="1" stop-color="#101a30"/>
+    </linearGradient>
+    <style>
+      .stat { opacity: 0; animation: popIn 0.9s cubic-bezier(0.34,1.56,0.64,1) forwards; transform-origin: center; transform-box: fill-box; }
+      @keyframes popIn { 0% { opacity: 0; transform: scale(0.6); } 100% { opacity: 1; transform: scale(1); } }
+      .bar { animation: growBar 2.2s ease-out infinite; transform-origin: left; transform-box: fill-box; }
+      @keyframes growBar { 0% { transform: scaleX(0.25); } 55% { transform: scaleX(1); } 100% { transform: scaleX(0.25); } }
+      .glowc { animation: cardGlow 3.2s ease-in-out infinite; }
+      @keyframes cardGlow { 0%,100% { stroke-opacity: 0.25; } 50% { stroke-opacity: 0.9; } }
+    </style>
+  </defs>
+  <rect width="900" height="240" rx="24" fill="url(#sbg)"/>
+
+  <g class="stat">
+    <rect class="glowc" x="30" y="40" width="192" height="160" rx="16" fill="#0d1526" stroke="#61dafb" stroke-width="2"/>
+    <text x="126" y="105" text-anchor="middle" font-size="52">📚</text>
+    <text x="126" y="155" text-anchor="middle" font-family="Verdana" font-size="38" font-weight="bold" fill="#61dafb">15</text>
+    <text x="126" y="182" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#94a3b8">lessons</text>
+  </g>
+  <g class="stat" style="animation-delay:0.25s">
+    <rect class="glowc" x="246" y="40" width="192" height="160" rx="16" fill="#0d1526" stroke="#818cf8" stroke-width="2" style="animation-delay:0.4s"/>
+    <text x="342" y="105" text-anchor="middle" font-size="52">🪜</text>
+    <text x="342" y="155" text-anchor="middle" font-family="Verdana" font-size="38" font-weight="bold" fill="#818cf8">106</text>
+    <text x="342" y="182" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#94a3b8">interactive steps</text>
+  </g>
+  <g class="stat" style="animation-delay:0.5s">
+    <rect class="glowc" x="462" y="40" width="192" height="160" rx="16" fill="#0d1526" stroke="#c084fc" stroke-width="2" style="animation-delay:0.8s"/>
+    <text x="558" y="105" text-anchor="middle" font-size="52">🧩</text>
+    <text x="558" y="155" text-anchor="middle" font-family="Verdana" font-size="38" font-weight="bold" fill="#c084fc">6</text>
+    <text x="558" y="182" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#94a3b8">modules</text>
+  </g>
+  <g class="stat" style="animation-delay:0.75s">
+    <rect class="glowc" x="678" y="40" width="192" height="160" rx="16" fill="#0d1526" stroke="#fbbf24" stroke-width="2" style="animation-delay:1.2s"/>
+    <text x="774" y="105" text-anchor="middle" font-size="52">🔥</text>
+    <text x="774" y="155" text-anchor="middle" font-family="Verdana" font-size="38" font-weight="bold" fill="#fbbf24">XP</text>
+    <text x="774" y="182" text-anchor="middle" font-family="sans-serif" font-size="17" fill="#94a3b8">streaks &amp; levels</text>
+  </g>
+
+  <rect x="30" y="216" width="840" height="8" rx="4" fill="#131f36"/>
+  <rect class="bar" x="30" y="216" width="840" height="8" rx="4" fill="#61dafb"/>
+</svg>

@@ -1,0 +1,1 @@
+{"dependencies":{"cookie-parser":"^1.4.6","express":"^4.19.2"},"description":"808 React — Mimo-style Burmese React learning app","name":"808-react","scripts":{"seed":"node seed.js","start":"node server.js"},"type":"module","version":"1.0.0"}

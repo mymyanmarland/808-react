@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ကိုယ်ရေး 👤 — 808 React ⚛️</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="topbar"><div class="wrap"><div class="logo">808 <span>React</span> ⚛️</div></div></div>
+<div class="wrap" id="main"></div>
+<nav class="nav">
+  <a href="/"><span class="i">🏠</span>ပင်မ</a>
+  <a href="/playground.html"><span class="i">🧪</span>Playground</a>
+  <a href="/profile.html" class="on"><span class="i">👤</span>ကိုယ်ရေး</a>
+</nav>
+<script src="/runner.js"></script>
+<script>
+(async ()=>{
+  const main = document.getElementById('main');
+  const me = await (await fetch('/api/me')).json();
+  if (!me.user) {
+    main.innerHTML = `<div class="card" style="text-align:center;margin-top:30px">
+      <div style="font-size:44px">🔑</div>
+      <h3>အကောင့်ဝင်ဖို့ လိုပါတယ်</h3>
+      <a class="btn" href="/auth.html">အကောင့်ဝင်မယ် / ဖွင့်မယ်</a></div>`;
+    return;
+  }
+  const pct = Math.round(100 * me.xpIntoLevel / me.xpForNext);
+  main.innerHTML = `
+    <div class="card" style="text-align:center">
+      <div style="font-size:48px">👤</div>
+      <h1>${esc(me.user.name)}</h1>
+      <p class="mut small">${esc(me.user.email)}</p>
+      <span class="badge">Level ${me.level}</span>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between" class="small mut"><span>Level ${me.level}</span><span>${me.xpIntoLevel}/${me.xpForNext} XP</span></div>
+      <div class="progress" style="margin-top:6px"><div style="width:${pct}%"></div></div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><b>${me.xp}</b><span>စုစုပေါင်း XP ⚡</span></div>
+      <div class="stat"><b>🔥 ${me.streak}</b><span>ရက်ဆက် streak</span></div>
+      <div class="stat"><b>${me.lessonsDone}</b><span>ပြီးတဲ့ lessons</span></div>
+      <div class="stat"><b>${me.stepsDone}</b><span>ပြီးတဲ့ ဆင့်များ</span></div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="small mut">အကောင်းဆုံး streak: 🔥 ${me.longestStreak} ရက်</div>
+      <button class="btn ghost block" id="logoutBtn" style="margin-top:10px">အကောင့်ထွက်မယ်</button>
+    </div>`;
+  document.getElementById('logoutBtn').onclick = async ()=>{
+    await fetch('/api/auth/logout',{method:'POST'});
+    location.href = '/';
+  };
+})();
+</script>
+</body>
+</html>

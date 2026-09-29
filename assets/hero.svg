@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0f1e"/>
+      <stop offset="0.55" stop-color="#0d1526"/>
+      <stop offset="1" stop-color="#14213d"/>
+    </linearGradient>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#61dafb"/>
+      <stop offset="0.5" stop-color="#a5f3fc"/>
+      <stop offset="1" stop-color="#818cf8"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#fff" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#61dafb" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#61dafb" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <pattern id="dots" width="36" height="36" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#61dafb" opacity="0.16"/>
+    </pattern>
+    <style>
+      .float { animation: floatUp 7s ease-in-out infinite; opacity: 0; }
+      @keyframes floatUp {
+        0% { opacity: 0; transform: translateY(26px); }
+        18% { opacity: 0.9; }
+        70% { opacity: 0.9; }
+        100% { opacity: 0; transform: translateY(-46px); }
+      }
+      .pulse-dot { animation: pulseDot 1.6s ease-in-out infinite; }
+      @keyframes pulseDot { 0%,100% { opacity: 1; r: 7; } 50% { opacity: 0.45; r: 5; } }
+      .nucleus { animation: nucleusPulse 3s ease-in-out infinite; transform-origin: 220px 200px; }
+      @keyframes nucleusPulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+      .twinkle { animation: twinkle 2.8s ease-in-out infinite; }
+      @keyframes twinkle { 0%,100% { opacity: 0.15; } 50% { opacity: 0.85; } }
+    </style>
+  </defs>
+
+  <rect width="1200" height="400" fill="url(#bg)" rx="24"/>
+  <rect width="1200" height="400" fill="url(#dots)" rx="24"/>
+  <ellipse cx="220" cy="200" rx="190" ry="150" fill="url(#glow)"/>
+
+  <!-- React atom -->
+  <g stroke="#61dafb" stroke-width="7" fill="none" opacity="0.95">
+    <g>
+      <ellipse cx="220" cy="200" rx="130" ry="50"/>
+      <animateTransform attributeName="transform" type="rotate" from="0 220 200" to="360 220 200" dur="14s" repeatCount="indefinite"/>
+    </g>
+    <g>
+      <ellipse cx="220" cy="200" rx="130" ry="50"/>
+      <animateTransform attributeName="transform" type="rotate" from="60 220 200" to="420 220 200" dur="14s" repeatCount="indefinite"/>
+    </g>
+    <g>
+      <ellipse cx="220" cy="200" rx="130" ry="50"/>
+      <animateTransform attributeName="transform" type="rotate" from="120 220 200" to="480 220 200" dur="14s" repeatCount="indefinite"/>
+    </g>
+  </g>
+  <circle class="nucleus" cx="220" cy="200" r="20" fill="#61dafb" filter="url(#soft)"/>
+  <circle cx="220" cy="200" r="13" fill="#a5f3fc"/>
+
+  <!-- twinkling stars -->
+  <circle class="twinkle" cx="80" cy="70" r="3" fill="#a5f3fc"/>
+  <circle class="twinkle" cx="420" cy="90" r="2.5" fill="#818cf8" style="animation-delay:0.9s"/>
+  <circle class="twinkle" cx="1120" cy="120" r="3" fill="#61dafb" style="animation-delay:1.7s"/>
+  <circle class="twinkle" cx="1050" cy="320" r="2.5" fill="#a5f3fc" style="animation-delay:2.2s"/>
+  <circle class="twinkle" cx="540" cy="340" r="3" fill="#818cf8" style="animation-delay:0.4s"/>
+
+  <!-- floating code particles -->
+  <g font-family="monospace" font-size="20" fill="#61dafb">
+    <text class="float" x="700" y="330">useState</text>
+    <text class="float" x="950" y="350" style="animation-delay:1.4s">&lt;App /&gt;</text>
+    <text class="float" x="480" y="360" style="animation-delay:2.8s">{props}</text>
+    <text class="float" x="830" y="360" style="animation-delay:4.2s">useEffect</text>
+    <text class="float" x="1080" y="340" style="animation-delay:5.6s">JSX</text>
+  </g>
+
+  <!-- title -->
+  <text x="430" y="165" font-family="Verdana, sans-serif" font-size="92" font-weight="bold" fill="url(#titleGrad)" letter-spacing="4">808 REACT</text>
+  <text x="434" y="218" font-family="sans-serif" font-size="34" fill="#e2e8f0">မြန်မာလို React သင်တန်း ⚛️</text>
+  <text x="434" y="262" font-family="monospace" font-size="21" fill="#7d8aa5">106 interactive steps · XP · streaks · playground</text>
+
+  <!-- LIVE badge -->
+  <g>
+    <rect x="434" y="288" width="128" height="40" rx="20" fill="#052e16" stroke="#22c55e" stroke-width="2"/>
+    <circle class="pulse-dot" cx="460" cy="308" r="7" fill="#22c55e"/>
+    <text x="476" y="316" font-family="Verdana, sans-serif" font-size="19" font-weight="bold" fill="#86efac">LIVE</text>
+  </g>
+
+  <!-- shine sweep -->
+  <g transform="skewX(-18)">
+    <rect x="-400" y="-40" width="180" height="480" fill="url(#shine)">
+      <animate attributeName="x" from="-400" to="1500" dur="4.5s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <rect width="1200" height="400" rx="24" fill="none" stroke="#61dafb" stroke-opacity="0.25" stroke-width="2"/>
+</svg>

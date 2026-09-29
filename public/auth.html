@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>အကောင့် — 808 React ⚛️</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap" style="max-width:420px;padding-top:40px">
+  <div style="text-align:center;margin-bottom:18px">
+    <div style="font-size:52px">⚛️</div>
+    <h1>808 React</h1>
+    <p class="mut small">မြန်မာလို React သင်တန်း</p>
+  </div>
+  <div class="card">
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <button class="btn" id="tabOtp" style="flex:1">🔑 OTP</button>
+      <button class="btn ghost" id="tabPw" style="flex:1">🔒 Password</button>
+    </div>
+
+    <!-- OTP flow -->
+    <div id="otpPane">
+      <div id="otpStep1">
+        <div class="field"><label>Email</label><input id="otpEmail" type="email" placeholder="you@example.com"></div>
+        <button class="btn block" id="otpSend">ကုဒ်ပို့မယ် 📩</button>
+        <p class="small mut" style="margin-top:8px">email ကို ၆-လုံးကုဒ် ပို့ပေးမယ် — password မှတ်စရာ မလိုဘူး ✨</p>
+      </div>
+      <div id="otpStep2" style="display:none">
+        <p class="small">📩 <b id="otpSentTo"></b> ကို ကုဒ်ပို့ပြီးပြီ</p>
+        <div class="field" id="otpNameField"><label>နာမည် (အကောင့်သစ်ဆို)</label><input id="otpName" placeholder="ဥပမာ — အောင်မင်း"></div>
+        <div class="field"><label>၆-လုံးကုဒ်</label><input id="otpCode" inputmode="numeric" maxlength="6" placeholder="123456" style="letter-spacing:6px;font-size:20px;text-align:center"></div>
+        <button class="btn block" id="otpVerify">အတည်ပြုမယ် ✓</button>
+        <button class="btn ghost block" id="otpBack" style="margin-top:8px">← email ပြန်ပြင်မယ်</button>
+      </div>
+    </div>
+
+    <!-- password flow -->
+    <div id="pwPane" style="display:none">
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <button class="btn ghost" id="tabLogin" style="flex:1">ဝင်မယ်</button>
+        <button class="btn ghost" id="tabSignup" style="flex:1">ဖွင့်မယ်</button>
+      </div>
+      <div id="nameField" class="field" style="display:none">
+        <label>နာမည်</label><input id="name" placeholder="ဥပမာ — အောင်မင်း">
+      </div>
+      <div class="field"><label>Email</label><input id="email" type="email" placeholder="you@example.com"></div>
+      <div class="field"><label>Password (အနည်းဆုံး ၆ လုံး)</label><input id="password" type="password"></div>
+      <button class="btn block" id="goBtn">အကောင့်ဝင်မယ်</button>
+    </div>
+
+    <div id="err" class="small" style="color:var(--bad);margin-top:8px"></div>
+  </div>
+  <p class="small mut" style="text-align:center"><a href="/">← ပင်မစာမျက်နှာ</a></p>
+</div>
+<script>
+const next = new URLSearchParams(location.search).get('next') || '/';
+const errBox = document.getElementById('err');
+function err(m){ errBox.textContent = m || ''; }
+
+// ---- tab switching ----
+let pwMode = 'login';
+function setTab(t){
+  const otp = t === 'otp';
+  document.getElementById('tabOtp').className = 'btn ' + (otp ? '' : 'ghost');
+  document.getElementById('tabPw').className = 'btn ' + (otp ? 'ghost' : '');
+  document.getElementById('otpPane').style.display = otp ? '' : 'none';
+  document.getElementById('pwPane').style.display = otp ? 'none' : '';
+  err('');
+}
+document.getElementById('tabOtp').onclick = () => setTab('otp');
+document.getElementById('tabPw').onclick = () => setTab('pw');
+
+// ---- OTP flow ----
+document.getElementById('otpSend').onclick = async () => {
+  err('');
+  const email = document.getElementById('otpEmail').value.trim();
+  if (!email) return err('email ရိုက်ထည့်ပါ');
+  const btn = document.getElementById('otpSend');
+  btn.disabled = true; btn.textContent = 'ပို့နေတယ်…';
+  try {
+    const r = await fetch('/api/auth/otp/request', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email }) });
+    const j = await r.json();
+    if (!j.ok) return err(j.error || 'အမှားတစ်ခု ဖြစ်နေပါတယ်');
+    document.getElementById('otpSentTo').textContent = email;
+    document.getElementById('otpStep1').style.display = 'none';
+    document.getElementById('otpStep2').style.display = '';
+  } finally { btn.disabled = false; btn.textContent = 'ကုဒ်ပို့မယ် 📩'; }
+};
+document.getElementById('otpBack').onclick = () => {
+  document.getElementById('otpStep2').style.display = 'none';
+  document.getElementById('otpStep1').style.display = '';
+  err('');
+};
+document.getElementById('otpVerify').onclick = async () => {
+  err('');
+  const email = document.getElementById('otpEmail').value.trim();
+  const code = document.getElementById('otpCode').value.trim();
+  const name = document.getElementById('otpName').value.trim();
+  if (code.length !== 6) return err('၆-လုံးကုဒ် အပြည့်ရိုက်ပါ');
+  const r = await fetch('/api/auth/otp/verify', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, code, name }) });
+  const j = await r.json();
+  if (!j.ok) return err(j.error || 'အမှားတစ်ခု ဖြစ်နေပါတယ်');
+  location.href = next;
+};
+
+// ---- password flow ----
+function setPwMode(m){
+  pwMode = m;
+  document.getElementById('tabLogin').className = 'btn ' + (m==='login'?'':'ghost');
+  document.getElementById('tabSignup').className = 'btn ' + (m==='signup'?'':'ghost');
+  document.getElementById('nameField').style.display = m==='signup' ? '' : 'none';
+  document.getElementById('goBtn').textContent = m==='login' ? 'အကောင့်ဝင်မယ်' : 'အကောင့်ဖွင့်မယ် 🚀';
+}
+document.getElementById('tabLogin').onclick = () => setPwMode('login');
+document.getElementById('tabSignup').onclick = () => setPwMode('signup');
+document.getElementById('goBtn').onclick = async () => {
+  err('');
+  const body = { email: document.getElementById('email').value, password: document.getElementById('password').value };
+  if (pwMode === 'signup') body.name = document.getElementById('name').value;
+  const r = await fetch('/api/auth/' + pwMode, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+  const j = await r.json();
+  if (!j.ok) return err(j.error || 'အမှားတစ်ခု ဖြစ်နေပါတယ်');
+  location.href = next;
+};
+setTab('otp'); setPwMode('login');
+</script>
+</body>
+</html>
